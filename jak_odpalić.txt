@@ -20,4 +20,6 @@ Frontend
 	3.Jak już mamy telefon to klikamy na ikonke "play"
 	
 
-W folderze jest również plik postman_collection.json, możecie go zaimportować do postmana i testować endpointy.
+Krótki opis api: https://documenter.getpostman.com/view/7143213/SzzdCg73?version=latest
+
+*W folderze jest również plik postman_collection.json, możecie go zaimportować do postmana i testować endpointy.
