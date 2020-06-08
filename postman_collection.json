@@ -1,0 +1,399 @@
+{
+	"info": {
+		"_postman_id": "b36172c4-6b59-4fce-a6b4-b09c3f78f16c",
+		"name": "python rest api",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "komunikator",
+			"item": [
+				{
+					"name": "endpoints",
+					"item": [
+						{
+							"name": "miscellaneous",
+							"item": [
+								{
+									"name": "/friends",
+									"request": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "Authorization",
+												"value": "Bearer  {{jwt_token}}",
+												"type": "text"
+											}
+										],
+										"url": {
+											"raw": "{{url}}/friends",
+											"host": [
+												"{{url}}"
+											],
+											"path": [
+												"friends"
+											]
+										},
+										"description": "Returns logged user's list of friends"
+									},
+									"response": []
+								}
+							],
+							"protocolProfileBehavior": {},
+							"_postman_isSubFolder": true
+						},
+						{
+							"name": "conversations",
+							"item": [
+								{
+									"name": "/conversations",
+									"request": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "Authorization",
+												"value": "Bearer  {{jwt_token}}",
+												"type": "text"
+											}
+										],
+										"url": {
+											"raw": "{{url}}/conversations",
+											"host": [
+												"{{url}}"
+											],
+											"path": [
+												"conversations"
+											]
+										},
+										"description": "Returns list of user's conversations"
+									},
+									"response": []
+								},
+								{
+									"name": "/message/<conv_id>",
+									"request": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Authorization",
+												"value": "Bearer  {{jwt_token}}",
+												"type": "text"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n\t\"content\": \"Sample message\"\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{url}}/message/369607fd-5837-4df0-83ac-22116f543ceb",
+											"host": [
+												"{{url}}"
+											],
+											"path": [
+												"message",
+												"369607fd-5837-4df0-83ac-22116f543ceb"
+											]
+										},
+										"description": "Sends new message to given conversation_in"
+									},
+									"response": []
+								},
+								{
+									"name": "/message/<conv_id>/<last_message_id>",
+									"protocolProfileBehavior": {
+										"disableBodyPruning": true
+									},
+									"request": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "Authorization",
+												"value": "Bearer {{jwt_token}}",
+												"type": "text"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n\t\"last_message_id\": 3\n}",
+											"options": {
+												"raw": {
+													"language": "javascript"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{url}}/message/8ef3d265-8e80-4c19-b6f0-a4535468199b",
+											"host": [
+												"{{url}}"
+											],
+											"path": [
+												"message",
+												"8ef3d265-8e80-4c19-b6f0-a4535468199b"
+											]
+										},
+										"description": "Returns all messages that have id bigger than last_message_id from given conversation_id.\r\nif last_message_id is set to 0 it will return all messages."
+									},
+									"response": []
+								}
+							],
+							"protocolProfileBehavior": {},
+							"_postman_isSubFolder": true
+						},
+						{
+							"name": "invitation",
+							"item": [
+								{
+									"name": "/invitations",
+									"request": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "Authorization",
+												"value": "Bearer  {{jwt_token}}",
+												"type": "text"
+											}
+										],
+										"url": {
+											"raw": "{{url}}/invitations",
+											"host": [
+												"{{url}}"
+											],
+											"path": [
+												"invitations"
+											]
+										},
+										"description": "Returns list of sended and received invitations (that are still not accepted/declined)"
+									},
+									"response": []
+								},
+								{
+									"name": "/invite/<user_id>",
+									"request": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Authorization",
+												"value": "Bearer  {{jwt_token}}",
+												"type": "text"
+											}
+										],
+										"url": {
+											"raw": "{{url}}/invite/2",
+											"host": [
+												"{{url}}"
+											],
+											"path": [
+												"invite",
+												"2"
+											]
+										},
+										"description": "Sends an invitation to user with given id."
+									},
+									"response": []
+								},
+								{
+									"name": "/invitation/manage",
+									"request": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Authorization",
+												"value": "JWT {{jwt_token}}",
+												"type": "text"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n\t\"invitation_id\": \"eaf688d5-aa61-4e59-b5a1-d73e70e77cf8\",\n\t\"accept\" : false\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{url}}/invitation/manage",
+											"host": [
+												"{{url}}"
+											],
+											"path": [
+												"invitation",
+												"manage"
+											]
+										},
+										"description": "Accepts or declines given invitation depending on \"accept\" argument.\r\nIf the invitation is declined sender will be still able to send new one"
+									},
+									"response": []
+								}
+							],
+							"protocolProfileBehavior": {},
+							"_postman_isSubFolder": true
+						},
+						{
+							"name": "user",
+							"item": [
+								{
+									"name": "/auth",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"id": "d8bdc916-594c-4845-9871-b6f710773425",
+												"exec": [
+													"pm.test(\"Body contains jwt_token\", function () {",
+													"    var jsonData = pm.response.json();",
+													"",
+													"    pm.expect(jsonData).to.have.property(\"access_token\")",
+													"    pm.environment.set(\"jwt_token\", jsonData.access_token);",
+													"",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json",
+												"type": "text"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n\t\"username\":\"test1\",\n\t\"password\": \"123456\"\n}"
+										},
+										"url": {
+											"raw": "{{url}}/auth",
+											"host": [
+												"{{url}}"
+											],
+											"path": [
+												"auth"
+											]
+										},
+										"description": "Authorizes user, if it succeeds an acess_token (valid for 15minutes) and user info will be sent."
+									},
+									"response": []
+								},
+								{
+									"name": "/register",
+									"request": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json",
+												"type": "text"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n\t\"username\":\"test1\",\n\t\"password\": \"123456\",\n\t\"about\": \"Hi there xd\"\n}"
+										},
+										"url": {
+											"raw": "{{url}}/register",
+											"host": [
+												"{{url}}"
+											],
+											"path": [
+												"register"
+											]
+										},
+										"description": "Creates a user"
+									},
+									"response": []
+								},
+								{
+									"name": "/search/<username>",
+									"request": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "Authorization",
+												"value": "Bearer  {{jwt_token}}",
+												"type": "text"
+											}
+										],
+										"url": {
+											"raw": "{{url}}/search/test3",
+											"host": [
+												"{{url}}"
+											],
+											"path": [
+												"search",
+												"test3"
+											]
+										},
+										"description": "Returns list of user that contain <username> in their username, it is case insensetive.\r\nusername length has to be at least 4 characters"
+									},
+									"response": []
+								},
+								{
+									"name": "/reset",
+									"request": {
+										"method": "PUT",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n\t\"password_old\" : \"123456\",\n\t\"password_new\" : \"654321\"\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{url}}/reset",
+											"host": [
+												"{{url}}"
+											],
+											"path": [
+												"reset"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "/aboutuser",
+									"request": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": ""
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "/abouuser",
+									"request": {
+										"method": "PUT",
+										"header": [],
+										"url": {
+											"raw": ""
+										}
+									},
+									"response": []
+								}
+							],
+							"protocolProfileBehavior": {},
+							"_postman_isSubFolder": true
+						}
+					],
+					"protocolProfileBehavior": {},
+					"_postman_isSubFolder": true
+				}
+			],
+			"protocolProfileBehavior": {}
+		}
+	]
+}
