@@ -15,6 +15,7 @@ Backend
 
 Frontend
 	1.Otwieramy projekt w Android Studio
+	2.w pliku frontend-android/app/build.gradle ustawiamy swój lokalny adres ip
 	2.Tworzymy wirtualny smartfon(i pobieramy androida - środowisko zrobi to za nas) 
 	- rozwijana lista u góry, obok ikonki "play", wybieramy open AVD manager.
 	3.Jak już mamy telefon to klikamy na ikonke "play"
