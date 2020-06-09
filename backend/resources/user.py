@@ -6,6 +6,8 @@ from os import urandom
 import base64
 from werkzeug.security import safe_str_cmp
 from flask_jwt_extended import jwt_required, create_access_token, get_jwt_identity
+
+
 class UserSearch(Resource):
 
     # returns list of users matching 'username' argument
@@ -31,6 +33,7 @@ class UserRegister(Resource):
     parser.add_argument(
         "about", type=str, required=False
     )
+
     @classmethod
     def post(cls):
         data = cls.parser.parse_args()
@@ -48,6 +51,7 @@ class UserRegister(Resource):
 
         return {'message': 'User created successfully.'}, 201
 
+
 class UserLogin(Resource):
     parser = reqparse.RequestParser()
     parser.add_argument(
@@ -56,33 +60,45 @@ class UserLogin(Resource):
     parser.add_argument(
         "password", type=str, required=True, help="This field cannot be left blank!"
     )
-    
+
     @classmethod
     def post(cls):
         data = cls.parser.parse_args()
         user = UserModel.find_by_username(data['username'])
-        if(user is None):
-            return {'message' : "Invalid credentials"}, 401   
+        if (user is None):
+            return {'message': "Invalid credentials"}, 401
         salt = base64.b64decode(user.salt)  # decoding base64 to bytes
-        password_hash = hashPassword(data['password'], salt) #password hash is in base64 format
-        
-        if safe_str_cmp(user.password, password_hash):
-            access_token = create_access_token(identity=user.id,fresh=True)
-            #refresh_token = create_refresh_token(user.id)
-            return {
-                'access_token': access_token,
-                'user': user.json()
-            },200
-        return {'message' : "Invalid credentials"}, 401   
+        password_hash = hashPassword(data['password'], salt)  # password hash is in base64 format
 
-class UserAbout(Resource):    
+        if safe_str_cmp(user.password, password_hash):
+            access_token = create_access_token(identity=user.id, fresh=True)
+            # refresh_token = create_refresh_token(user.id)
+            return {
+                       'access_token': access_token,
+                       'user': user.json()
+                   }, 200
+        return {'message': "Invalid credentials"}, 401
+
+
+class UserAbout(Resource):
+    parser = reqparse.RequestParser()
+    parser.add_argument(
+        "about", type=str, required=False, help="This field cannot be left blank!"
+    )
+
     @classmethod
     @jwt_required
     def get(cls):
-        pass
+        user = UserModel.find_by_id(get_jwt_identity())
+        return {'message': user.about}, 200
+
     @classmethod
     @jwt_required
     def put(cls):
-        pass
-
-
+        data = cls.parser.parse_args()
+        user = UserModel.find_by_id(get_jwt_identity())
+        if not data.get('about'):
+            return {'message': "Pole about jest wymagane"}, 404
+        user.about = data['about']
+        user.save_to_db()
+        return {'message': f'Ustawiono nową wartość about na {data["about"]}'}, 200
