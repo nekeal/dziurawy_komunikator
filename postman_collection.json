@@ -203,7 +203,7 @@
 										"header": [
 											{
 												"key": "Authorization",
-												"value": "JWT {{jwt_token}}",
+												"value": "Bearer {{jwt_token}}",
 												"type": "text"
 											}
 										],
