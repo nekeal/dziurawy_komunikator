@@ -5,9 +5,9 @@ from db import db
 from flask_socketio import SocketIO,send
 
 from resources.user import (UserRegister,
-                           UserSearch,
-                           UserLogin,                           
-                           UserAbout)
+                            UserSearch,
+                            UserLogin,
+                            UserAbout, UserPassword)
 from resources.invitation import MyInvitations, InvitationSender, InvitationManager
 from resources.friendship import FriendList
 from resources.conversation import ConversationList,MessagesFinder,MessageSender
@@ -84,6 +84,7 @@ def create_tables():
 api.add_resource(UserRegister, '/register')
 api.add_resource(UserLogin,'/auth')
 api.add_resource(UserAbout,'/aboutuser')
+api.add_resource(UserPassword,'/changepassword')
 
 api.add_resource(UserSearch, '/search/<string:username>')
 
